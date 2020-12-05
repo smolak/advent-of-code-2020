@@ -1,0 +1,19 @@
+{
+  "name": "advent-of-code-2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "export TZ=UTC; mocha -r esm --recursive './**/*.test.js'",
+    "test:cgen:watch": "export TZ=UTC; mocha -R min -w -r esm --recursive './**/*.test.js'",
+    "test:unit": "export TZ=UTC; mocha -r esm --recursive './**/*.test.js'",
+    "test:unit:watch": "export TZ=UTC; mocha -R min -w -r esm --recursive './**/*.test.js'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "esm": "^3.2.25",
+    "mocha": "^8.2.1"
+  }
+}
