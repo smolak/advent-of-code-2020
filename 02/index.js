@@ -52,5 +52,5 @@ const countValidPasswords = (passwordPolicy) => (rawData) => toLines(rawData).ma
 export const countValidPasswordsAtSledRentalPlace = countValidPasswords(rentalPlacePasswordPolicy);
 export const countValidPasswordsAtOfficialTobogganCorporate = countValidPasswords(officialTobogganCorporatePasswordPolicy);
 
-console.log(countValidPasswordsAtSledRentalPlace(getFileContents(__dirname,'inputData.txt')));
-console.log(countValidPasswordsAtOfficialTobogganCorporate(getFileContents(__dirname, 'inputData.txt')));
+console.log('[D2T1] Valid passwords at Sled Rental Place:', countValidPasswordsAtSledRentalPlace(getFileContents(__dirname,'inputData.txt')));
+console.log('[D2T2] Valid passwords at Official Toboggan Corporate:', countValidPasswordsAtOfficialTobogganCorporate(getFileContents(__dirname, 'inputData.txt')));

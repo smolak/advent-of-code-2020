@@ -44,5 +44,5 @@ inputData.some((entry, index) => {
     });
 });
 
-console.log('Two numbers result:', twoNumbersResult);
-console.log('Three numbers result:', threeNumbersResult);
+console.log('[D1T1] Two numbers result:', twoNumbersResult);
+console.log('[D1T2] Three numbers result:', threeNumbersResult);

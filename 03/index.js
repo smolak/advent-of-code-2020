@@ -29,4 +29,4 @@ export const countEncounteredTrees = (rawData) => {
     return fieldsEncountered.filter(isTree).length;
 };
 
-console.log(countEncounteredTrees(getFileContents(__dirname, './inputData.txt')));
+console.log('[D3T1] Encountered trees:', countEncounteredTrees(getFileContents(__dirname, './inputData.txt')));
