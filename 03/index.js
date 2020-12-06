@@ -1,8 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-
-const getFileContents = (filename) => fs.readFileSync(path.resolve(__dirname, filename), { encoding: 'utf8'});
-const toLines = (rawData) => rawData.trim().split('\n');
+import { getFileContents, toLines } from "../helpers";
 
 const toGrid = (rawData) => toLines(rawData).map((line) => line.split(''));
 
@@ -33,4 +29,4 @@ export const countEncounteredTrees = (rawData) => {
     return fieldsEncountered.filter(isTree).length;
 };
 
-console.log(countEncounteredTrees(getFileContents('inputData.txt')));
+console.log(countEncounteredTrees(getFileContents(__dirname, './inputData.txt')));

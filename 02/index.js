@@ -1,8 +1,4 @@
-import fs from 'fs';
-import path from 'path';
-
-const getFileContents = (filename) => fs.readFileSync(path.resolve(__dirname, filename), { encoding: 'utf8'});
-const toLines = (rawData) => rawData.trim().split('\n');
+import { getFileContents, toLines } from "../helpers";
 
 const rentalPlacePasswordPolicy = {
     toModel: (entry) => {
@@ -56,5 +52,5 @@ const countValidPasswords = (passwordPolicy) => (rawData) => toLines(rawData).ma
 export const countValidPasswordsAtSledRentalPlace = countValidPasswords(rentalPlacePasswordPolicy);
 export const countValidPasswordsAtOfficialTobogganCorporate = countValidPasswords(officialTobogganCorporatePasswordPolicy);
 
-console.log(countValidPasswordsAtSledRentalPlace(getFileContents('inputData.txt')));
-console.log(countValidPasswordsAtOfficialTobogganCorporate(getFileContents('inputData.txt')));
+console.log(countValidPasswordsAtSledRentalPlace(getFileContents(__dirname,'inputData.txt')));
+console.log(countValidPasswordsAtOfficialTobogganCorporate(getFileContents(__dirname, 'inputData.txt')));

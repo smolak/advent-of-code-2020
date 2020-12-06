@@ -1,4 +1,6 @@
-import inputData from './inputData';
+import { getFileContents, toLines } from "../helpers";
+
+const inputData = toLines(getFileContents(__dirname, 'inputData.txt')).map(Number);
 
 const searchedSum = 2020;
 let twoNumbersResult;
