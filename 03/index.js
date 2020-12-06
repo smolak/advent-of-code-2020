@@ -27,7 +27,7 @@ export const countEncounteredTrees = (rawData, movementSpeed) => {
     return fieldsEncountered.filter(isTree).length;
 };
 
-export const calculateMultipleTripsResult = (rawData, trips) => {
+export const calculateTreesEncounteredOnMultipleTrips = (rawData, trips) => {
     return trips.reduce((result, movementSpeed) => {
         return result * countEncounteredTrees(rawData, movementSpeed);
     }, 1);
@@ -43,4 +43,4 @@ const trips = [
 ];
 
 console.log('[D3T1] Encountered trees:', countEncounteredTrees(inputData, { right: 3, down: 1 }));
-console.log('[D3T2] Encountered trees in multiple trips:', calculateMultipleTripsResult(inputData, trips));
+console.log('[D3T2] Encountered trees in multiple trips:', calculateTreesEncounteredOnMultipleTrips(inputData, trips));

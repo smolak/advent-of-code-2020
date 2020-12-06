@@ -1,8 +1,7 @@
-import { countEncounteredTrees, calculateMultipleTripsResult } from './index';
+import { countEncounteredTrees, calculateTreesEncounteredOnMultipleTrips } from './index';
 import { expect } from 'chai';
 
-describe('countEncounteredTrees', () => {
-    const inputData = `
+const inputData = `
 ..##.......
 #...#...#..
 .#....#..#.
@@ -15,6 +14,7 @@ describe('countEncounteredTrees', () => {
 #...##....#
 .#..#...#.#`;
 
+describe('countEncounteredTrees', () => {
     it('should return a number of trees we encounter along the way while moving 3 right, 1 down', () => {
         const movementSpeed = {
             right: 3,
@@ -23,7 +23,9 @@ describe('countEncounteredTrees', () => {
 
         expect(countEncounteredTrees(inputData, movementSpeed)).to.equal(7);
     });
+});
 
+describe('calculateTreesEncounteredOnMultipleTrips', () => {
     describe('when you decide to visit the woods multiple times with different move speeds each time', () => {
         it('should return result of multiplication of number of trees you pass each time', () => {
             const trips = [
@@ -33,8 +35,11 @@ describe('countEncounteredTrees', () => {
                 { right: 7, down: 1 },
                 { right: 1, down: 2 },
             ];
+            const calculationResult = trips.reduce((result, movementSpeed) => {
+                return result * countEncounteredTrees(inputData, movementSpeed);
+            }, 1);
 
-            expect(calculateMultipleTripsResult(inputData, trips)).to.equal(336);
+            expect(calculateTreesEncounteredOnMultipleTrips(inputData, trips)).to.equal(calculationResult);
         });
     });
 });
