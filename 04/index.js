@@ -1,10 +1,11 @@
 import { getFileContents, toLines } from "../helpers";
 
 const PASSPORT_PROPERTIES_SEPARATOR = ' ';
+const PASSPORT_PROPERTIES_KEY_VALUE_SEPARATOR = ':';
 const isPassportData = (entry) => entry.trim().length > 0;
 const lastIndex = (list) => list.length === 0 ? 0 : list.length - 1;
 const lastElement = (list) => list[lastIndex(list)];
-const cidIsMissing = (passportData) => passportData.findIndex((keyValuePair) => keyValuePair.includes('cid:')) === -1;
+const cidIsMissing = (passportData) => passportData.findIndex(([key]) => key === 'cid') === -1;
 const appendLast = (list, data, separator) => {
     const last = lastElement(list);
     const index = lastIndex(list);
@@ -13,7 +14,9 @@ const appendLast = (list, data, separator) => {
 
     return list;
 };
-const parsePassportData = (passportsData) => passportsData.split(PASSPORT_PROPERTIES_SEPARATOR);
+const parsePassportData = (passportsData) => passportsData
+    .split(PASSPORT_PROPERTIES_SEPARATOR)
+    .map((keyValueProperty) => keyValueProperty.split(PASSPORT_PROPERTIES_KEY_VALUE_SEPARATOR));
 const prepareNewPassport = (passportsData) => [ ...passportsData, '' ];
 
 const toPassportsData = (rawData) => toLines(rawData)
