@@ -1,4 +1,4 @@
-import { validatePassports } from "./index";
+import { validatePassports, strictPassportsValidation } from "./index";
 import { expect } from 'chai';
 
 const inputData = `
@@ -20,5 +20,11 @@ iyr:2011 ecl:brn hgt:59in
 describe('validatePassports', () => {
     it('should return number of valid passport data', () => {
         expect(validatePassports(inputData)).to.equal(2);
+    });
+});
+
+describe('strictPassportsValidation', () => {
+    it('should return number of valid passport data (but is much stricter)', () => {
+        expect(strictPassportsValidation(inputData)).to.equal(2);
     });
 });
