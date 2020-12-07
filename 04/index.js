@@ -1,19 +1,14 @@
 import { getFileContents, toLines } from "../helpers";
+import { appendLast } from "./utils";
+import {
+    hasBirthYear, hasRightAge, hasIssueYear, wasIssuedRecently, hasExpirationYear, isNotExpired,
+    hasHeight, fitsHeightStandards, hasHairColor, hairColorIsDefined, hasEyeColor, fitsEyesColorStandards,
+    hasPassportId, hasValidPassportId, hasCountryId
+} from "./validators";
 
 const PASSPORT_PROPERTIES_SEPARATOR = ' ';
 const PASSPORT_PROPERTIES_KEY_VALUE_SEPARATOR = ':';
 const isPassportData = (entry) => entry.trim().length > 0;
-const lastIndex = (list) => list.length === 0 ? 0 : list.length - 1;
-const lastElement = (list) => list[lastIndex(list)];
-
-const appendLast = (list, data, separator) => {
-    const last = lastElement(list);
-    const index = lastIndex(list);
-
-    list[index] = `${last}${separator}${data}`.trim();
-
-    return list;
-};
 
 const buildPassportObject = (passportData) => {
     const properties = passportData.split(PASSPORT_PROPERTIES_SEPARATOR);
@@ -43,54 +38,8 @@ const toPassportsData = (rawData) => toLines(rawData)
     }, [ '' ])
         .map(buildPassportObject);
 
-
-const hasProperty = (property) => (passportData) => passportData[property] !== undefined;
-const propertyIsInRange = (property, min, max) => (passportData) => {
-    const value = parseInt(passportData[property], 10);
-
-    return value >= min && value <= max;
-}
-
-const hasBirthYear = hasProperty('byr');
-const hasRightAge = propertyIsInRange('byr',1920, 2002);
-
-const hasIssueYear = hasProperty('iyr');
-const wasIssuedRecently = propertyIsInRange('iyr', 2010, 2020);
-
-const hasExpirationYear = hasProperty('eyr');
-const isNotExpired = propertyIsInRange('eyr', 2020, 2030);
-
-const hasHeight = hasProperty('hgt');
-const inCm = (value) => value.includes('cm');
-const inIn = (value) => value.includes('in');
-const fitsHeightStandards = (passportData) => {
-    const height = String(passportData.hgt);
-
-    if (inCm(height)) {
-        return propertyIsInRange('hgt',150, 193)(passportData);
-    }
-
-    if (inIn(height)) {
-        return propertyIsInRange('hgt', 59, 76)(passportData);
-    }
-
-    return false;
-};
-
-const hasHairColor = hasProperty('hcl');
-const hairColorIsDefined = ({ hcl }) => hcl.match(/^#[a-f0-9]{6}$/) !== null;
-
-const hasEyeColor = hasProperty('ecl');
-const acceptableEyeColors = ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'];
-const fitsEyesColorStandards = ({ ecl }) => acceptableEyeColors.includes(ecl);
-
-const hasPassportId = hasProperty('pid');
-const hasValidPassportId = ({ pid }) => pid.match(/^[0-9]{9}$/) !== null;
-
-const hasCid = hasProperty('cid');
-
 const passportIsValid = (passportData) =>
-    passportData.numberOfProperties === 8 || (passportData.numberOfProperties === 7 && !hasCid(passportData));
+    passportData.numberOfProperties === 8 || (passportData.numberOfProperties === 7 && !hasCountryId(passportData));
 
 export const validatePassports = (rawData) => toPassportsData(rawData)
     .reduce((numberOfValidPassports, passportData) => {
