@@ -1,4 +1,4 @@
-import { sumYesAnswers } from "./index";
+import { sumAllYesAnswers } from "./index";
 import { expect } from 'chai';
 
 const inputData = `
@@ -21,6 +21,6 @@ b
 
 describe('sumYesAnswers', () => {
     it('should return sum of unique, by group, "yes" answers', () => {
-        expect(sumYesAnswers(inputData)).to.equal(11);
+        expect(sumAllYesAnswers(inputData)).to.equal(11);
     });
 });
