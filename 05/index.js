@@ -29,4 +29,14 @@ const desc = (a, b) => b - a;
 
 const highestSeatId = encryptedSeatsInfo.map(decryptSeatInfo).map(calculateSeatId).sort(desc)[0];
 
+const allButFrontAndBack = ({ row }) => row > 0 && row < 127;
+const gap = (seatId, index, list) => {
+    const nextSeatId = list[index + 1];
+
+    return nextSeatId - seatId > 1;
+};
+
+const gapAt = encryptedSeatsInfo.map(decryptSeatInfo).filter(allButFrontAndBack).map(calculateSeatId).sort().find(gap);
+
 console.log('[D5T1] Highest seat ID:', highestSeatId);
+console.log('[D5T2] My seat ID:', gapAt + 1);
