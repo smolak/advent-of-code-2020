@@ -5,7 +5,6 @@ const NO_BAGS_STRING = 'no other bags';
 const PARENT_CHILDREN_SEPARATOR = ' bags contain ';
 
 const isFilled = (description) => !description.includes(NO_BAGS_STRING);
-const containsShinyGold = (description) => description.split(PARENT_CHILDREN_SEPARATOR)[1].includes('shiny gold');
 const extractOuterBagColor = (description) => description.split(PARENT_CHILDREN_SEPARATOR)[0];
 const extractInnerBagColor = (innerDescription) => innerDescription.match(/\d\s(.*)\sbag/)[1];
 const extractInnerBagColors = (description) => {
@@ -28,9 +27,6 @@ const createBagsContainingBagsMapper = (descriptions) => {
 export const countBagColorsContainingAtLeastOneShinyGoldBag = (inputData) => {
     const descriptions = toLines(inputData);
     const filledBagsDescriptions = descriptions.filter(isFilled);
-    const containingShinyGoldDescriptions = filledBagsDescriptions.filter(containsShinyGold);
-
-    const colorsContainingShinyGolden = containingShinyGoldDescriptions.map(extractOuterBagColor);
     const mapper = createBagsContainingBagsMapper(filledBagsDescriptions);
     const entries = Object.entries(mapper);
 
@@ -44,10 +40,7 @@ export const countBagColorsContainingAtLeastOneShinyGoldBag = (inputData) => {
         return results;
     }
 
-    const result = colorsContainingShinyGolden
-        .flatMap((color) => findParents(colorsContainingShinyGolden, color));
-
-    return uniq(result).length;
+    return uniq(findParents([], 'shiny gold')).length;
 }
 
 const inputData = getFileContents(__dirname, 'inputData.txt');
